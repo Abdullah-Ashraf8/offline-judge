@@ -1,0 +1,133 @@
+Problem 1
+Case 1:
+Input:
+5
+Output:
+10
+Case 2:
+Input:
+12
+Output:
+24
+Case 3:
+Input:
+100
+Output:
+200
+Case 4:
+Input:
+1
+Output:
+2
+Case 5:
+Input:
+50
+Output:
+100
+Case 6:
+Input:
+7
+Output:
+14
+Case 7 (Edge):
+Input:
+-7
+Output:
+-14
+Case 8 (Edge):
+Input:
+3000000000
+Output:
+6000000000
+
+Problem 2
+Case 1:
+Input:
+2 3
+Output:
+5
+Case 2:
+Input:
+10 20
+Output:
+30
+Case 3:
+Input:
+7 8
+Output:
+15
+Case 4:
+Input:
+100 250
+Output:
+350
+Case 5:
+Input:
+0 0
+Output:
+0
+Case 6:
+Input:
+40 2
+Output:
+42
+Case 7 (Edge):
+Input:
+-5 5
+Output:
+0
+Case 8 (Edge):
+Input:
+2000000000 2000000000
+Output:
+4000000000
+
+Problem 3
+Case 1:
+Input:
+3
+1 9 4
+Output:
+9
+Case 2:
+Input:
+5
+10 20 30 40 50
+Output:
+50
+Case 3:
+Input:
+4
+7 3 8 2
+Output:
+8
+Case 4:
+Input:
+1
+5
+Output:
+5
+Case 5:
+Input:
+6
+1 2 3 4 5 6
+Output:
+6
+Case 6:
+Input:
+2
+9 4
+Output:
+9
+Case 7 (Edge):
+Input:
+3
+-5 -2 -9
+Output:
+-2
+Case 8 (Edge):
+Input:
+4
+-1 -1 -1 -1
+Output:
+-1

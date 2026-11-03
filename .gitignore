@@ -1,0 +1,9 @@
+# Temporary build folder
+work/
+
+# Legacy batch results
+results/
+
+# Python cache
+__pycache__/
+*.pyc
