@@ -150,11 +150,13 @@ structure.
 | Duplicate `Problem 1` | `Problem 1 appears twice` |
 | Data line equal to `Output:` | Read as a label instead of data |
 
-Run the parser by itself when editing a testcase file:
+Run the parser checks from the project root when editing a testcase file:
 
 ```bash
-python3 test_testcases.py
+python3 -m Dev_Tests.test_testcases
 ```
+
+Use `python -m Dev_Tests.test_testcases` on Windows.
 
 ---
 
@@ -175,7 +177,7 @@ python3 test_testcases.py
 ## 5. Changing the number of cases or points
 
 The defaults live in `config.py`. If you change them, update every testcase file to the
-new count and update the checks in `test_testcases.py`; the judge validates the exact
+new count and update the checks in `Dev_Tests/test_testcases.py`; the judge validates the exact
 configured number of cases, and the self-tests assert the default 6 + 2 layout.
 
 The student-facing rules are in the

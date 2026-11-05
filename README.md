@@ -109,19 +109,21 @@ result. The expected outcomes and the break-it samples are described in the
 
 ## Tests
 
-Run these after changing the judge:
+Run these from the project root after changing the judge:
 
 ```bash
-python3 test_extractor.py
-python3 test_testcases.py
-python3 test_runner.py
-python3 test_safety.py
-python3 test_cleanup.py
-python3 test_judge.py
+python3 -m Dev_Tests.test_extractor
+python3 -m Dev_Tests.test_testcases
+python3 -m Dev_Tests.test_runner
+python3 -m Dev_Tests.test_safety
+python3 -m Dev_Tests.test_cleanup
+python3 -m Dev_Tests.test_judge
 ```
 
-Use `python` instead of `python3` on Windows. The runner test waits for timeouts and
-takes about 8 seconds. A full pass leaves no `work/` or `__pycache__/` behind.
+Use `python -m ...` instead of `python3 -m ...` on Windows. The tests import the judge
+modules from the project root, so run them from this folder (or with the project root on
+`PYTHONPATH`). The runner test waits for timeouts and takes about 8 seconds. A full pass
+leaves no `work/` or `__pycache__/` behind.
 
 ---
 
@@ -136,7 +138,7 @@ offline-judge/
 ├── safety.py             screens code before running it
 ├── runner.py             compiles, runs, compares output, scores
 ├── judge.py              main program
-├── test_*.py             self-tests
+├── Dev_Tests/            self-tests (run from the project root)
 ├── Docs/                 user, testcase, and developer documentation
 ├── Subtests/demo/       demo student submissions
 ├── Subtests/breakit/    submissions that test error handling

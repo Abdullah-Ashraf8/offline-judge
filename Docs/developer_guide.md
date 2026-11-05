@@ -18,15 +18,14 @@ The judge is a single-pass pipeline. Each module has one job:
 | `safety.py` | Screens answer code for forbidden calls/headers and old-style I/O |
 | `runner.py` | Compiles one block, runs its cases, compares output, computes the score |
 | `judge.py` | Main program: checks arguments, manual review, builds the report, keeps/deletes work |
-| `test_*.py` | Self-tests, one file per module plus judge integration and cleanup |
+| `Dev_Tests/` | Self-tests, one file per module plus judge integration and cleanup |
 
 Folder layout:
 
 ```text
 offline-judge/
 ├── config.py, cleanup.py, extractor.py, testcases.py, safety.py, runner.py, judge.py
-├── test_extractor.py, test_testcases.py, test_runner.py, test_safety.py
-├── test_cleanup.py, test_judge.py
+├── Dev_Tests/              self-tests, run with python3 -m from the project root
 ├── Docs/
 ├── Subtests/demo/          normal demo submissions
 ├── Subtests/breakit/       error-handling samples
@@ -126,7 +125,7 @@ command line
 | `CHECK_FILENAME_ID` | `True` | Compare filename ID with header ID |
 
 Changing case counts or points also requires updating `testcases` expectations in
-`test_testcases.py` and the documented examples.
+`Dev_Tests/test_testcases.py` and the documented examples.
 
 ---
 
@@ -182,7 +181,8 @@ At startup, `judge.py` removes only the current student's folder. It never wipes
 `work/`, because other students' failed runs are intentionally kept. Failed folders
 accumulate until the student is rerun or the reviewer deletes `work/`.
 
-`test_runner.py` removes its own `work/_runner_test/` and then removes `work/` if empty.
+`Dev_Tests/test_runner.py` removes its own `work/_runner_test/` and then removes
+`work/` if empty.
 
 ---
 
@@ -228,18 +228,23 @@ Old-style I/O (`scanf`, `printf`, `puts`, `gets`, `getchar`) produces a warning 
 
 ## 8. Testing
 
-Run every test after changing behavior:
+Run every test from the project root after changing behavior:
 
 ```bash
-python3 test_extractor.py    # 26 checks
-python3 test_testcases.py    # 12 checks
-python3 test_runner.py       # 8 checks, about 8 seconds of timeouts
-python3 test_safety.py       # 9 checks
-python3 test_cleanup.py      # 6 checks
-python3 test_judge.py        # 11 checks
+python3 -m Dev_Tests.test_extractor    # 26 checks
+python3 -m Dev_Tests.test_testcases    # 12 checks
+python3 -m Dev_Tests.test_runner       # 8 checks, about 8 seconds of timeouts
+python3 -m Dev_Tests.test_safety       # 9 checks
+python3 -m Dev_Tests.test_cleanup      # 6 checks
+python3 -m Dev_Tests.test_judge        # 11 checks
 ```
 
-`test_judge.py` runs the real CLI through `subprocess` and checks work retention:
+Use `python -m ...` on Windows. Running the modules with `-m` keeps the project root on
+`sys.path`, so the tests can import `config`, `cleanup`, `extractor`, and the other
+modules without path changes.
+
+`Dev_Tests/test_judge.py` runs the real CLI through `subprocess` and checks work
+retention:
 
 - `alice` is fully AC, so the folder is deleted.
 - `dave` has a runtime error and a missing block, so the folder and hints are kept.
@@ -261,13 +266,13 @@ A full pass leaves no `work/` or `__pycache__/` behind.
 
 1. Change the module that produces it (`runner.py` for run results, `safety.py` for
    screening).
-2. Add a case to the matching `test_*.py`.
+2. Add a case to the matching `Dev_Tests/test_*.py`.
 3. Update the verdict table in the user guide and the README if it is user-visible.
 
 ### Add a new testcase rule
 
 1. Change `testcases.py`.
-2. Add a `check(...)` to `test_testcases.py`.
+2. Add a `check(...)` to `Dev_Tests/test_testcases.py`.
 3. Update `Docs/testcase_format_guide.md`.
 
 ### Add batch/folder mode
