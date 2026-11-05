@@ -196,7 +196,7 @@ For each problem in the testcase file, in order:
 1. If the answer block is missing, print `MISSING`, score 0, and continue.
 2. Write the answer to `pN.cpp`.
 3. Compile with `g++ -std=c++17 -O2`, with a 30-second limit.
-4. Run every case with a 2-second limit and a 1,000,000-character output limit.
+4. Run every case with a 2-second limit and a 1,000,000-byte output limit.
 5. Compare output after normalizing.
 
 Normalization ignores trailing spaces on each line, trailing blank lines, and Windows
@@ -216,7 +216,7 @@ total score.
 | `AC` | Accepted: output matches the expected output after normalization. |
 | `WA` | Wrong Answer: the program finished but printed the wrong output. |
 | `TLE` | Time Limit Exceeded: the case ran longer than 2 seconds. |
-| `OLE` | Output Limit Exceeded: the program printed more than 1,000,000 characters. |
+| `OLE` | Output Limit Exceeded: the program printed more than 1,000,000 bytes. |
 | `RE` | Runtime Error: the program returned a non-zero exit code or crashed. |
 | `CE` | Compile Error: the block could not be compiled. All cases for that problem fail. |
 | `MISSING` | The student did not include an answer block for that problem. |
@@ -388,3 +388,12 @@ input handling.
 - `cin`/`cout`-only is a warning, not an enforced rule.
 - A data line that exactly matches a section label is read as a label.
 - There is no roster check and no CSV output; record scores manually.
+
+---
+
+## See also
+
+- [Testcase format guide](testcase_format_guide.md) - how to write testcase files.
+- [Developer guide](developer_guide.md) - internals, cleanup lifecycle, tests, and
+  known risks.
+- [Project README](../README.md) - quick start and project layout.

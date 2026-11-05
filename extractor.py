@@ -2,7 +2,7 @@
 #   - the identification comment on line 1 (name, email, student ID)
 #   - one code block per problem
 #   - a list of warnings about format problems
-# Format reference: judge_formats.md, section 1
+# Format reference: Docs/testcase_format_guide.md
 import os
 import re
 

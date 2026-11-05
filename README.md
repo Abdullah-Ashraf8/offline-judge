@@ -103,7 +103,7 @@ Kept folders remain until that student is run again or `work/` is deleted manual
 
 `Subtests/demo/` contains eight sample students, each designed to show a different
 result. The expected outcomes and the break-it samples are described in the
-[user guide](Docs/offline_judge_user_guide.md#9-demo-students-and-expected-results).
+[user guide](Docs/offline_judge_user_guide.md#8-demo-students-and-expected-results).
 
 ---
 
@@ -151,6 +151,8 @@ offline-judge/
   artifacts, troubleshooting.
 - [Testcase format guide](Docs/testcase_format_guide.md) - how to write valid
   testcase files.
+- [Developer guide](Docs/developer_guide.md) - architecture, cleanup lifecycle,
+  cross-platform notes, tests, and known risks.
 
 ---
 

@@ -1,6 +1,6 @@
 # judge.py - judge ONE student file against ONE testcase file
 # usage:   python judge.py <assignment_file.cpp> <testcase_file.txt>
-# example: python judge.py submissions\demo\alice_1001.cpp tests\demo.txt
+# example: python judge.py Subtests/demo/alice_1001.cpp Testcases/demo.txt
 # exit codes: 0 = judged, 1 = usage or file problem, 2 = file needs manual review
 import os
 import sys
@@ -63,7 +63,7 @@ def check_manual_review(path, data):
 def main():
     if len(sys.argv) != 3:
         say("usage: python judge.py <assignment_file.cpp> <testcase_file.txt>")
-        say("example: python judge.py submissions\\demo\\alice_1001.cpp tests\\demo.txt")
+        say("example: python judge.py Subtests/demo/alice_1001.cpp Testcases/demo.txt")
         return 1
 
     assignment_path = sys.argv[1]

@@ -15,7 +15,7 @@ COMPILE_TIMEOUT_SEC = 30
 RUN_TIMEOUT_SEC = 2
 MAX_OUTPUT_BYTES = 1000000  # the program is killed as soon as it prints more
 
-# testcase format (judge_formats.md, section 2)
+# testcase format (Docs/testcase_format_guide.md)
 BASE_CASE_COUNT = 6
 EDGE_CASE_COUNT = 2
 BASE_POINTS = 1
