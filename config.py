@@ -3,7 +3,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-SUBMISSIONS_DIR = os.path.join(BASE_DIR, "Sub_Tests")
+SUBMISSIONS_DIR = os.path.join(BASE_DIR, "Subtests")
 TESTS_DIR = os.path.join(BASE_DIR, "Testcases")
 WORK_DIR = os.path.join(BASE_DIR, "work")
 RESULTS_DIR = os.path.join(BASE_DIR, "results")
