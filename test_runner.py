@@ -1,6 +1,7 @@
 # test_runner.py - automated checks for runner.py
 import os
 
+import cleanup
 from config import WORK_DIR
 from runner import judge_problem, normalize
 
@@ -100,6 +101,9 @@ check("output flood: OLE on all cases, 0 points",
 print("(next check waits for 4 timeouts, about 8 seconds)")
 r = judge_problem(FOREVER, CASES, BUILD, "forever")
 check("infinite loop: TLE on all cases, 0 points", r["verdicts"] == ["TLE"] * 4 and r["score"] == 0)
+
+cleanup.remove_build_dir(BUILD)
+cleanup.remove_empty_work_dir()
 
 print()
 print("%d / %d checks passed" % (sum(results), len(results)))

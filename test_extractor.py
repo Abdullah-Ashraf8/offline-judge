@@ -2,6 +2,7 @@
 import os
 import tempfile
 
+import cleanup
 from config import SUBMISSIONS_DIR
 from extractor import extract_submission, filename_id
 
