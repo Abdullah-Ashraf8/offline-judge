@@ -1,5 +1,5 @@
 # testcases.py - reads the single testcase file of one assignment
-# Format reference: judge_formats.md, section 2
+# Format reference: Docs/testcase_format_guide.md
 import re
 
 import config

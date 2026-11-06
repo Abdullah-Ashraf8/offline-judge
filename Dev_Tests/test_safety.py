@@ -1,4 +1,5 @@
 # test_safety.py - automated checks for safety.py
+import cleanup
 from safety import find_forbidden, find_style_warnings
 
 results = []

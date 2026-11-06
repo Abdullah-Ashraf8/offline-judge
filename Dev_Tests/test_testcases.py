@@ -2,6 +2,7 @@
 import os
 import tempfile
 
+import cleanup
 from config import TESTS_DIR
 from testcases import parse_testcases
 

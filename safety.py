@@ -1,5 +1,5 @@
 # safety.py - checks a student's answer code before it is run
-# Used by judge.py. Format reference: judge_formats.md
+# Used by judge.py. Format reference: Docs/testcase_format_guide.md
 # This is a screen, not a sandbox: it sends suspicious code to manual review.
 import re
 

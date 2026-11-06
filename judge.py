@@ -1,11 +1,11 @@
 # judge.py - judge ONE student file against ONE testcase file
 # usage:   python judge.py <assignment_file.cpp> <testcase_file.txt>
-# example: python judge.py submissions\demo\alice_1001.cpp tests\demo.txt
+# example: python judge.py Subtests/demo/alice_1001.cpp Testcases/demo.txt
 # exit codes: 0 = judged, 1 = usage or file problem, 2 = file needs manual review
 import os
-import shutil
 import sys
 
+import cleanup
 import config
 from extractor import extract_submission, filename_id
 from runner import judge_problem
@@ -63,7 +63,7 @@ def check_manual_review(path, data):
 def main():
     if len(sys.argv) != 3:
         say("usage: python judge.py <assignment_file.cpp> <testcase_file.txt>")
-        say("example: python judge.py submissions\\demo\\alice_1001.cpp tests\\demo.txt")
+        say("example: python judge.py Subtests/demo/alice_1001.cpp Testcases/demo.txt")
         return 1
 
     assignment_path = sys.argv[1]
@@ -103,42 +103,65 @@ def main():
 
     stem = os.path.splitext(os.path.basename(assignment_path))[0]
     build_dir = os.path.join(config.WORK_DIR, stem)
-    if os.path.isdir(build_dir):
-        shutil.rmtree(build_dir, ignore_errors=True)
+    cleanup.remove_build_dir(build_dir)
     os.makedirs(build_dir, exist_ok=True)
 
     total = 0
-    for n in numbers:
-        cases = tests[n]
-        max_score = sum(c["points"] for c in cases)
-        say("Problem %d" % n)
+    failed = []
+    all_ok = True
+    try:
+        for n in numbers:
+            cases = tests[n]
+            max_score = sum(c["points"] for c in cases)
+            say("Problem %d" % n)
 
-        if n not in data["problems"]:
-            say("  MISSING - no answer block for this problem")
-            say("  Problem %d score: 0/%d" % (n, max_score))
+            if n not in data["problems"]:
+                say("  MISSING - no answer block for this problem")
+                say("  Problem %d score: 0/%d" % (n, max_score))
+                say()
+                all_ok = False
+                failed.append(n)
+                continue
+
+            res = judge_problem(data["problems"][n], cases, build_dir, "p%d" % n)
+            if res["status"] != "AC":
+                all_ok = False
+                failed.append(n)
+
+            if res["status"] == "CE":
+                say("  COMPILE ERROR - all cases failed")
+                lines = [l.strip() for l in res["note"].splitlines() if l.strip()]
+                for line in lines[:8]:
+                    say("    " + line)
+
+            for case, verdict in zip(cases, res["verdicts"]):
+                label = "Case %d%s:" % (case["number"], " (Edge)" if case["edge"] else "")
+                if verdict == "AC":
+                    say("  %-14s PASSED   +%d" % (label, case["points"]))
+                else:
+                    say("  %-14s FAILED   +0 of %d  [%s]" % (label, case["points"], verdict))
+
+            say("  Problem %d score: %d/%d" % (n, res["score"], max_score))
             say()
-            continue
-
-        res = judge_problem(data["problems"][n], cases, build_dir, "p%d" % n)
-
-        if res["status"] == "CE":
-            say("  COMPILE ERROR - all cases failed")
-            lines = [l.strip() for l in res["note"].splitlines() if l.strip()]
-            for line in lines[:8]:
-                say("    " + line)
-
-        for case, verdict in zip(cases, res["verdicts"]):
-            label = "Case %d%s:" % (case["number"], " (Edge)" if case["edge"] else "")
-            if verdict == "AC":
-                say("  %-14s PASSED   +%d" % (label, case["points"]))
-            else:
-                say("  %-14s FAILED   +0 of %d  [%s]" % (label, case["points"], verdict))
-
-        say("  Problem %d score: %d/%d" % (n, res["score"], max_score))
-        say()
-        total += res["score"]
+            total += res["score"]
+    except BaseException:
+        say("Artifacts kept in %s" % os.path.relpath(build_dir, config.BASE_DIR))
+        raise
 
     say("TOTAL SCORE: %d/%d" % (total, max_total))
+
+    if all_ok:
+        cleanup.remove_build_dir(build_dir)
+        cleanup.remove_empty_work_dir()
+    else:
+        for n in failed:
+            source = os.path.join(build_dir, "p%d.cpp" % n)
+            if os.path.isfile(source):
+                say("Problem %d failed - see %s"
+                    % (n, os.path.relpath(source, config.BASE_DIR)))
+            else:
+                say("Problem %d failed - no answer block was submitted" % n)
+        say("Artifacts kept in %s" % os.path.relpath(build_dir, config.BASE_DIR))
     return 0
 
 
